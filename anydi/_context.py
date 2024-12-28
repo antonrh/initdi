@@ -29,6 +29,11 @@ class ScopedContext(abc.ABC):
         """Set an instance of a dependency in the scoped context."""
         self._instances[interface] = instance
 
+    def alias(self, interface: AnyInterface, alias: AnyInterface) -> None:
+        """Alias an instance of a dependency in the scoped context."""
+        if interface in self._instances:
+            self._instances[alias] = self._instances[interface]
+
     @abc.abstractmethod
     def get_or_create(self, provider: Provider) -> tuple[Any, bool]:
         """Get or create an instance of a dependency from the scoped context."""
